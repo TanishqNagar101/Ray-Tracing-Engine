@@ -1,5 +1,6 @@
-#ifndef VECTOR3_H
-#define VECTOR3_H
+#pragma once
+
+
 #include <cmath>
 #include <iosfwd>
 constexpr double EPS=1e-8;
@@ -34,4 +35,4 @@ vec3& operator/=(const vec3&, double);
 std::ostream& operator<<(std::ostream&, const vec3&);
 //vec3 operator(const vec3&, const vec3&);
 //vec3 operator(const vec3&, const vec3&);
-#endif
+

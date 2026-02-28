@@ -1,4 +1,4 @@
-#include ".\header_files\vec3.h"
+#include "header_files/vec3.h"
 #include <ostream>
 //Implementation of vec3.h or programming logic 
 

@@ -1,41 +1,36 @@
 //This is for ppm file format
+#include "header_files/ppm.h"
+#include "header_files/vec3.h"
 #include <iostream>
 #include <fstream>
-void generate(const double* arr, const int row, const int column){
-	std::ofstream file("image.ppm");
+#include <algorithm>
 
-	if(file.is_open()){
-		std::cout<<"File is open writing content!!"<<std::endl;
-		file<<"P3\n"<<column<<" "<<row<<"\n"<<255<<"\n";
-		for(int i=0;i<row*column;i++){
-			int base=i*3;
-			file<<*(arr+base+0)<<" "
-			    <<*(arr+base+1)<<" "
-			    <<*(arr+base+2)<<"\n";
-		};
-		file.close();
-	}
-	else std::cout<<"File cannot open"<<std::endl;
-	
-};
-
-int main(){
-	int h=256;
-	int w=256;
-	
-	double arr[h*w*3];
-	
-	for(int i=0;i<h;i++){
-		for(int j=0;j<w;j++){
-			int pixel_idx=w*i+j;
-			int base = pixel_idx*3;
-
-			arr[base+0]=double(j);
-			arr[base+1]=double(i);
-			arr[base+2]=double(0);
-		};
+bool generate(const std::vector<vec3>& v, int width,int height){
+	if(v.size() != static_cast<size_t>(width*height)){
+		std::cerr<<"Buffer size mismatch\n";
+		return false;
 	};
 
-	generate(arr,w,h);
+	std::ofstream file("image.ppm");
+	if(!file){
+		std::cerr<<"Failed to open file\n";
+		return false;
+	};
 
+	file<<"P3\n"<<width<<" "<<height<<"\n255\n";
+	
+	int total_pixel=static_cast<int>(v.size());
+	
+	for(int i=0;i<total_pixel;i++){
+		const vec3& p=v[i];
+		double tr = std::clamp(p.x,0.0,0.999);
+		double tg = std::clamp(p.y,0.0,0.999);
+		double tb = std::clamp(p.z,0.0,0.999);
+		int r = static_cast<int>(tr*255.999);
+		int g = static_cast<int>(tg*255.999);
+		int b = static_cast<int>(tb*255.999);
+		file<<r<<" "<<g<<" "<<b<<"\n";
+	};
+	return true;
+	
 };
