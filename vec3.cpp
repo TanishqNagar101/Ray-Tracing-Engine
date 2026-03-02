@@ -71,12 +71,12 @@ vec3 normalize(const vec3& v){
 vec3 operator/(const vec3& v1, const double d){
 	return vec3(v1.x/d, v1.y/d, v1.z/d);
 };
-vec3 operator*(const vec3& v, const double m){
-	return vec3(v.x*m,v.y*m,v.z*m);
-};
-vec3 operator*(const double m, const vec3& v){
-	return vec3(v.x*m,v.y*m,v.z*m);
-};
+//vec3 operator*(const vec3& v, const double m){
+//	return vec3(v.x*m,v.y*m,v.z*m);
+//};
+//vec3 operator*(const double m, const vec3& v){
+//	return vec3(v.x*m,v.y*m,v.z*m);
+//};
 
 
 //Operator overloading between vectors

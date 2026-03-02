@@ -10,10 +10,10 @@ public:
 	ray() {}
 	ray(const point& origin, const point& direction):orig(origin), dir(direction) {}
 
-	const point& origin() {return orig};
-	const point& direction() {return dir};
+	const point& origin() const {return orig;}
+	const point& direction() const {return dir;}
 
-	point at(double t){
+	point at(double t) const{
 		return orig + (t*dir);
 	}
 

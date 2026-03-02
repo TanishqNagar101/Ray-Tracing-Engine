@@ -3,18 +3,22 @@
 #include "header_files/vec3.h"
 #include "header_files/color.h"
 #include "header_files/ppm.h"
+#include "header_files/ray.h"
 
 using point3=vec3;
 
 color ray_color(const ray& r){
-	return color(0,0,0);
+	vec3 unit_vector = normalize(r.direction());
+	auto t = 0.5*(unit_vector.y+1);
+	auto mix = (1.0-t)*color(0,0,255) + t*color(255,255,255);
+	return mix;
 
 };
 
 
 int main(){
 	auto aspect_ratio=16.0/9.0;
-	int image_ = 400;
+	int image_width = 400;
 	//Calculating Height
 	int image_height = image_/aspect_ratio;
 	image_height = image_height<1?1:image_height;
@@ -47,11 +51,12 @@ int main(){
 			auto pixel_center = pixel00_loc + (c*delta_u) + (r*delta_v);
 			auto ray_direction = pixel_center - camera_center;
 			
-			auto 
-
+			ray r(camera_center, ray_direction);
+			
+			color pixel_color = ray_color(r);
 			// Array Filling
-			int idx = (image_*r) + c;
-			img[idx] = p;
+			int idx = (image_width*r) + c;
+			img[idx] = pixel_color;
 		};
 	};
 	generate(img,image_,image_height);
