@@ -10,7 +10,7 @@ using point3=vec3;
 color ray_color(const ray& r){
 	vec3 unit_vector = normalize(r.direction());
 	auto t = 0.5*(unit_vector.y+1);
-	auto mix = (1.0-t)*color(0,0,255) + t*color(255,255,255);
+	auto mix = (1.0-t)*color(1,1,1) + t*color(0,1,0);
 	return mix;
 
 };
@@ -20,7 +20,7 @@ int main(){
 	auto aspect_ratio=16.0/9.0;
 	int image_width = 400;
 	//Calculating Height
-	int image_height = image_/aspect_ratio;
+	int image_height = image_width/aspect_ratio;
 	image_height = image_height<1?1:image_height;
 	
 	//Creating the view port
@@ -45,19 +45,19 @@ int main(){
 	auto pixel00_loc = top_left + 0.5 * (delta_u+delta_v);
 
 	//Vector array creation
-	std::vector<vec3> img(image_*image_height);
+	std::vector<vec3> img(image_width*image_height);
 	for(int r=0;r<image_height;r++){
-		for(int c=0;c<image_;c++){
+		for(int c=0;c<image_width;c++){
 			auto pixel_center = pixel00_loc + (c*delta_u) + (r*delta_v);
 			auto ray_direction = pixel_center - camera_center;
 			
-			ray r(camera_center, ray_direction);
+			ray ray(camera_center, ray_direction);
 			
-			color pixel_color = ray_color(r);
+			color pixel_color = ray_color(ray);
 			// Array Filling
 			int idx = (image_width*r) + c;
 			img[idx] = pixel_color;
 		};
 	};
-	generate(img,image_,image_height);
+	generate(img,image_width,image_height);
 }

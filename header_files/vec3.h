@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <cmath>
 #include <iosfwd>
 constexpr double EPS=1e-8;
@@ -26,8 +25,8 @@ vec3& operator+=(vec3&, const vec3&);
 vec3& operator-=(vec3&, const vec3&);
 vec3& operator*=(const vec3&, const vec3&);
 
-vec3 operator*(const vec3&, double);
 vec3 normalize(const vec3&);
+vec3 operator*(const vec3&, double);
 vec3 operator*(double, const vec3&);
 
 vec3& operator/=(const vec3&, double);
