@@ -4,7 +4,7 @@
 
 vec3::vec3():x(0),y(0),z(0) {}
 vec3::vec3(double x,double y, double z):x(x),y(y),z(z) {}
-	
+
 //Length of a vector
 double vec3::length() const{
 	return std::sqrt(x*x+y*y+z*z);

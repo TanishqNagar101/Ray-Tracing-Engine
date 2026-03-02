@@ -1,5 +1,5 @@
 #pragma once
 #include <vector>
-
-bool generate(const std::vector<double>&, int, int);
+#include "vec3.h"
+bool generate(const std::vector<vec3>&, int, int);
 
