@@ -7,14 +7,35 @@
 
 using point3=vec3;
 
-color ray_color(const ray& r){
-	vec3 unit_vector = normalize(r.direction());
-	auto t = 0.5*(unit_vector.y+1);
-	auto mix = (1.0-t)*color(1,1,1) + t*color(0,1,0);
-	return mix;
+double hit_sphere(double radius,const point3& center, const ray& ray){
+	vec3 oc = center-ray.origin();
+	double a=dot(ray.direction(),ray.direction());
+	double h=dot(ray.direction(),oc);
+	double c=dot(oc,oc)- (radius*radius);
+	double D=h*h-a*c;
+	
+	if(D<0) return -1.0;
+	else{
+		return (h - std::sqrt(D)) / (a);
+
+	};
 
 };
 
+
+color ray_color(const ray& r){
+	auto i = hit_sphere(0.5,point3(0,0,-1),r);
+	if(i>0.0){
+		vec3 N = normalize(r.at(i)- vec3(0,0,-1));
+		return 0.5*color(N.x+1,N.y+1,N.z+1);
+	};
+	
+	vec3 unit_vector = normalize(r.direction());
+	auto t = 0.5*(unit_vector.y+1);
+	auto mix = (1.0-t)*color(1,1,1) + t*color(0.5, 0.7, 1.0);
+	return mix;
+
+};
 
 int main(){
 	auto aspect_ratio=16.0/9.0;
