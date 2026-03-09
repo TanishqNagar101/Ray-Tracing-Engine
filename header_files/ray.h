@@ -8,7 +8,7 @@ class ray{
 	point3 dir;
 public:
 	ray() {}
-	ray(const point3& origin, const point& direction):orig(origin), dir(direction) {}
+	ray(const point3& origin, const point3& direction):orig(origin), dir(direction) {}
 
 	const point3& origin() const {return orig;}
 	const point3& direction() const {return dir;}
