@@ -9,7 +9,7 @@ public:
 	double t;
 	bool front_face;
 
-	void set_front_normal(const ray& r, const vec3& outward_normal){
+	void set_face_normal(const ray& r, const vec3& outward_normal){
 		//For the set record normal
 		//Outward normal is assumed to have unit length. Why?? 
 		front_face = dot(r.direction(),outward_normal)<0 ;
@@ -22,7 +22,7 @@ public:
 class hittable{
 public:
 	virtual ~hittable() = default;
-	virtual bool hit(const ray& r, double ray_min, double ray_max, const hit_record& rec ) const =0;
+	virtual bool hit(const ray& r, double ray_min, double ray_max, hit_record& rec ) const=0;
 
 
 };

@@ -1,28 +1,16 @@
 #include <vector>
 #include "header_files/ray_tracer_utils.h"
 
-double hit_sphere(double radius,const point3& center, const ray& ray){
-	vec3 oc = center-ray.origin();
-	double a=dot(ray.direction(),ray.direction());
-	double h=dot(ray.direction(),oc);
-	double c=dot(oc,oc)- (radius*radius);
-	double D=h*h-a*c;
-	
-	if(D<0) return -1.0;
-	else{
-		return (h - std::sqrt(D)) / (a);
-
-	};
-
-};
+#include "header_files/hittable.h"
+#include "header_files/hittables_list.h"
+#include "header_files/sphere.h"
 
 
-color ray_color(const ray& r){
-	auto i = hit_sphere(0.5,point3(0,0,-1),r);
-	if(i>0.0){
-		vec3 N = normalize(r.at(i)- vec3(0,0,-1));
-		return 0.5*color(N.x+1,N.y+1,N.z+1);
-	};
+color ray_color(const ray& r, const hittable& world){
+	hit_record rec;
+	if(world.hit(r, 0, inf, rec)){
+		return 0.5*(rec.normal+color(1,1,1));
+	}
 	
 	vec3 unit_vector = normalize(r.direction());
 	auto t = 0.5*(unit_vector.y+1);
@@ -42,6 +30,12 @@ int main(){
 	auto viewport_height = 2.0;//This is an arbritary number
 	auto viewport_width = viewport_height * (double(image_width)/image_height);
 	
+	//World
+	hittables_list world;
+	world.add(std::make_shared<sphere>(point3(0,0,-1), 0.5));
+	world.add(std::make_shared<sphere>(point3(0,-100.5,-1),100));
+
+
 	//Camera setup
 	point3 camera_center = point3(0,0,0);
 	
@@ -66,9 +60,9 @@ int main(){
 			auto pixel_center = pixel00_loc + (c*delta_u) + (r*delta_v);
 			auto ray_direction = pixel_center - camera_center;
 			
-			ray ray(camera_center, ray_direction);
+			ray current_ray(camera_center, ray_direction);
 			
-			color pixel_color = ray_color(ray);
+			color pixel_color = ray_color(current_ray, world);
 			// Array Filling
 			int idx = (image_width*r) + c;
 			img[idx] = pixel_color;
