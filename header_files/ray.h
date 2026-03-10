@@ -1,8 +1,6 @@
 #pragma once
 #include "vec3.h"
 
-using point3=vec3;
-
 class ray{
 	point3 orig;
 	point3 dir;

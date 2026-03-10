@@ -19,16 +19,16 @@ public:
 	bool hit(const ray& r, double ray_min, double ray_max, const hit_record& rec) const override{
 		hit_record temp_rec;
 		bool hit_anything = false;
-		auto closest_so_far = tmax;
+		auto closest_so_far = ray_max;
 
-		for (cosnt auto& object:objects){
+		for (const auto& object:objects){
 			if(object->hit(r,ray_min,ray_max,temp_rec)){
 				hit_anything = true;
 				closest_so_far = temp_rec.t;
 				rec = temp_rec;
 				
-			};	
-		};
+			}	
+		}
 		return hit_anything;
 
 	}

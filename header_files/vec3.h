@@ -3,7 +3,6 @@
 #include <cmath>
 #include <iosfwd>
 constexpr double EPS=1e-8;
-
 struct vec3{
 	double x,y,z;
 	vec3();
@@ -34,4 +33,8 @@ vec3& operator/=(const vec3&, double);
 std::ostream& operator<<(std::ostream&, const vec3&);
 //vec3 operator(const vec3&, const vec3&);
 //vec3 operator(const vec3&, const vec3&);
+
+using point3 = vec3;
+
+
 

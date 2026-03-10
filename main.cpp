@@ -1,11 +1,5 @@
-#include <iostream>
 #include <vector>
-#include "header_files/vec3.h"
-#include "header_files/color.h"
-#include "header_files/ppm.h"
-#include "header_files/ray.h"
-
-using point3=vec3;
+#include "header_files/ray_tracer_utils.h"
 
 double hit_sphere(double radius,const point3& center, const ray& ray){
 	vec3 oc = center-ray.origin();
